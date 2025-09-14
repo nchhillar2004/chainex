@@ -7,10 +7,10 @@ export default function Footer(){
                 &copy; 2025. Student Platform. All rights reserved.
             </div>
             <div className="flex link justify-center items-center space-x-2 flex-wrap">
-                <Link href={"about"}>[about]</Link>
-                <Link href={"contact"}>[contact]</Link>
-                <Link href={"terms"}>[terms]</Link>
-                <Link href={"privacy"}>[privacy]</Link>
+                <Link href={"/about"}>[about]</Link>
+                <Link href={"/contact"}>[contact]</Link>
+                <Link href={"/terms"}>[terms]</Link>
+                <Link href={"/privacy"}>[privacy]</Link>
             </div>
         </footer>
     );

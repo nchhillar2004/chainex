@@ -24,10 +24,12 @@ export default function Header(){
     return(
         <header className="py-2 px-4 max-sm:px-2">
             <nav className="flex items-center justify-between space-x-1 flex-wrap">
-                <Link href={"/"} className="flex space-x-1 items-center">
+                <div className="flex space-x-1 items-center cursor-pointer">
                     <Image priority src="/logo.svg" alt={`${Config.name} logo`} height={26} width={26} className="max-sm:h-[20px] max-sm:w-[20px]" onClick={toggleTheme}/>
-                    <h1 className="text-2xl font-semibold max-sm:text-xl">{Config.name}</h1>
-                </Link>
+                    <Link href={"/"}>
+                        <h1 className="text-2xl font-semibold max-sm:text-xl">{Config.name}</h1>
+                    </Link>
+                </div>
 
                 <nav className="flex items-center link">
                     {isAuthenticated ? 
