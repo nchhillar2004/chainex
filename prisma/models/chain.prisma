@@ -1,0 +1,96 @@
+model Chain {
+  id          Int                @id @default(autoincrement())
+  name        String             @unique
+  description String?
+  creatorId   Int
+  visibility  ChainVisibility    @default(PUBLIC)
+  postPolicy  ChainPostingPolicy @default(VERIFIED_ONLY)
+  minAge      Int? // Minimum age to join (calculated from DOB)
+  maxAge      Int? // Maximum age to join
+  isPrivate   Boolean            @default(false)
+  slug        String?            @unique
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  deletedAt   DateTime?
+
+  creator      User           @relation("Creator", fields: [creatorId], references: [id], onDelete: Restrict)
+  members      ChainMember[]
+  threads      Thread[]
+  pinnedThread PinnedThread[]
+  boosts       Boost[]
+  chainTags    ChainTag[]
+  bans         ChainBan[]
+  Notification Notification[]
+
+  @@index([creatorId])
+  @@index([name])
+}
+
+model ChainMember {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  chainId  Int
+  joinedAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chain Chain @relation(fields: [chainId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, chainId])
+  @@index([userId])
+  @@index([chainId])
+}
+
+model Boost {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  chainId   Int
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chain Chain @relation(fields: [chainId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, chainId])
+  @@index([userId])
+  @@index([chainId])
+}
+
+model ChainTag {
+  chainId Int
+  tagId   Int
+
+  chain Chain @relation(fields: [chainId], references: [id], onDelete: Cascade)
+  tag   Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([chainId, tagId])
+  @@index([chainId])
+  @@index([tagId])
+}
+
+model PinnedThread {
+  chainId  Int
+  threadId Int
+  pinnedAt DateTime @default(now())
+
+  chain Chain @relation(fields: [chainId], references: [id], onDelete: Cascade)
+
+  @@id([chainId, threadId])
+  @@index([chainId])
+  @@index([threadId])
+}
+
+model ChainBan {
+  id           Int          @id @default(autoincrement())
+  chainId      Int
+  bannedUserId Int
+  issuerId     Int
+  banType      ChainBanType
+  reason       String?
+  durationDays Int? // Null for permanent
+  createdAt    DateTime     @default(now())
+  endsAt       DateTime?
+
+  chain      Chain @relation(fields: [chainId], references: [id], onDelete: Cascade)
+  bannedUser User  @relation("BannedUser", fields: [bannedUserId], references: [id], onDelete: Cascade)
+
+  @@unique([chainId, bannedUserId])
+}

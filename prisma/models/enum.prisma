@@ -1,0 +1,86 @@
+// enum.prisma
+
+// ----- USER ----- //
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPICIOUS
+  SUSPENDED
+  BANNED
+}
+
+enum NotificationType {
+  MENTION
+  FOLLOW
+  REPLY
+  BADGE
+  UPDATE
+  BAN
+  KICK
+  GENERAL
+}
+
+// ----- CHAIN ----- //
+enum ChainMemberRole {
+  MEMBER
+  MODERATOR
+  OWNER
+}
+
+enum ChainBanType {
+  KICK
+  BAN
+}
+
+enum ChainJoiningStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ChainVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum ChainPostingPolicy {
+  VERIFIED_ONLY
+  MODERATORS_ONLY
+  LEVEL_BASED
+}
+
+// ----- THREAD ----- //
+enum FileType {
+  IMAGE
+  PDF
+  OTHER
+}
+
+// ----- GENERAL ----- //
+enum VoteType {
+  UP
+  DOWN
+}
+
+enum ReferralStatus {
+  ACTIVE
+  EXPIRED
+  USED
+}
+
+enum TargetType {
+  USER
+  CHAIN
+  THREAD
+}

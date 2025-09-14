@@ -1,0 +1,92 @@
+model Thread {
+  id        Int       @id @default(autoincrement())
+  title     String
+  content   String
+  chainId   Int
+  authorId  Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  chain        Chain          @relation(fields: [chainId], references: [id], onDelete: Cascade)
+  author       User           @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  replies      Reply[]
+  votes        Vote[]         @relation("ThreadVotes")
+  threadTags   ThreadTag[]
+  files        File[]         @relation("ThreadFiles")
+  Notification Notification[]
+
+  @@index([chainId])
+  @@index([authorId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model Reply {
+  id        Int       @id @default(autoincrement())
+  content   String
+  threadId  Int
+  authorId  Int
+  parentId  Int?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  thread       Thread         @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  author       User           @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  parent       Reply?         @relation("ReplyChildren", fields: [parentId], references: [id], onDelete: NoAction)
+  children     Reply[]        @relation("ReplyChildren")
+  votes        Vote[]         @relation("ReplyVotes")
+  files        File[]         @relation("ReplyFiles")
+  Notification Notification[]
+
+  @@index([threadId])
+  @@index([authorId])
+  @@index([parentId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model Vote {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  threadId Int?
+  replyId  Int?
+  voteType VoteType
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  thread Thread? @relation("ThreadVotes", fields: [threadId], references: [id], onDelete: Cascade)
+  reply  Reply?  @relation("ReplyVotes", fields: [replyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, threadId]) // For thread votes
+  @@unique([userId, replyId]) // For reply votes
+  @@index([userId])
+  @@index([threadId])
+  @@index([replyId])
+}
+
+model ThreadTag {
+  threadId Int
+  tagId    Int
+
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([threadId, tagId])
+  @@index([threadId])
+  @@index([tagId])
+}
+
+model File {
+  id        Int      @id @default(autoincrement())
+  url       String
+  mimeType  String
+  fileType  FileType
+  threadId  Int?
+  replyId   Int?
+  createdAt DateTime @default(now())
+
+  thread Thread? @relation("ThreadFiles", fields: [threadId], references: [id], onDelete: Cascade)
+  reply  Reply?  @relation("ReplyFiles", fields: [replyId], references: [id], onDelete: Cascade)
+
+  @@index([threadId])
+  @@index([replyId])
+}

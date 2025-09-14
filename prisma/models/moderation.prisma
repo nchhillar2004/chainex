@@ -1,0 +1,16 @@
+model Report {
+  id         Int        @id @default(autoincrement())
+  reporterId Int
+  targetId   Int
+  targetType TargetType
+  reason     String
+  status     String     @default("PENDING")
+  resolvedAt DateTime?
+  createdAt  DateTime   @default(now())
+
+  reporter User @relation("Reporter", fields: [reporterId], references: [id], onDelete: Cascade)
+
+  @@index([reporterId])
+  @@index([targetId, targetType])
+  @@index([status])
+}

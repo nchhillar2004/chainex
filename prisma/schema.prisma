@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:nchhillar@localhost:3306/chainex"
+}
+
+// ----- GENERAL MODELS ----- //
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  userTags   UserTag[]
+  threadTags ThreadTag[]
+  chainTags  ChainTag[]
+}
+
+model Badge {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+
+  userBadges UserBadge[]
+}
+
+model ReferralCode {
+  id        Int            @id @default(autoincrement())
+  code      String         @unique
+  creatorId Int
+  usedBy    Int?
+  maxUses   Int            @default(1)
+  status    ReferralStatus @default(ACTIVE)
+
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
+
+  creator       User                  @relation("Creator", fields: [creatorId], references: [id], onDelete: Cascade)
+  verifications VerificationRequest[]
+
+  @@index([creatorId])
+  @@index([code])
+}

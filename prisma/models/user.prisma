@@ -1,0 +1,131 @@
+// ----- USER MODEL ----- //
+
+model User {
+  id          Int     @id @default(autoincrement())
+  username    String  @unique
+  email       String? @unique
+  password    String
+  fullname    String?
+  dob         String?
+  schoolName  String?
+  schoolEmail String? @unique
+  avatarUrl   String?
+  bio         String?
+
+  experience Int        @default(0)
+  level      Int        @default(1)
+  role       Role       @default(USER)
+  status     UserStatus @default(ACTIVE)
+  isVerified Boolean    @default(false)
+  ip         String?
+
+  // relations
+  verification          VerificationRequest?
+  communitiesCreated    Chain[]              @relation("Creator")
+  communityMembers      ChainMember[]
+  threads               Thread[]
+  replies               Reply[]
+  votes                 Vote[]
+  boosts                Boost[]
+  followsAsFollower     Follow[]             @relation("Follower")
+  followsAsFollowed     Follow[]             @relation("Followed")
+  userTags              UserTag[]
+  userBadges            UserBadge[]
+  notifications         Notification[]       @relation("Recipient")
+  notificationsAsFrom   Notification[]       @relation("From")
+  reportsAsReporter     Report[]             @relation("Reporter")
+  referralCodesCreated  ReferralCode[]       @relation("Creator")
+  communityBansReceived ChainBan[]           @relation("BannedUser")
+
+  time      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isVerified, role, status])
+}
+
+model VerificationRequest {
+  id             Int     @id @default(autoincrement())
+  userId         Int     @unique
+  fullname       String
+  dob            String
+  schoolName     String
+  schoolEmail    String?
+  documentUrl    String
+  referralCodeId Int?
+
+  status  VerificationStatus @default(PENDING)
+  remarks String?
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  referralCode ReferralCode? @relation(fields: [referralCodeId], references: [id])
+
+  time      String
+  createdAt DateTime @default(now())
+
+  @@index([userId, status])
+}
+
+model UserBadge {
+  id      Int @id @default(autoincrement())
+  userId  Int
+  badgeId Int
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  time      String
+  awardedAt DateTime @default(now())
+
+  @@unique([userId, badgeId])
+  @@index([userId])
+  @@index([badgeId])
+}
+
+model UserTag {
+  userId Int
+  tagId  Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([userId, tagId])
+  @@index([userId])
+  @@index([tagId])
+}
+
+model Notification {
+  id          Int              @id @default(autoincrement())
+  recipientId Int
+  fromUserId  Int?
+  type        NotificationType
+  threadId    Int?
+  replyId     Int?
+  chainId     Int?
+  isRead      Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+
+  recipient User    @relation("Recipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  fromUser  User?   @relation("From", fields: [fromUserId], references: [id])
+  thread    Thread? @relation(fields: [threadId], references: [id], onDelete: SetNull)
+  reply     Reply?  @relation(fields: [replyId], references: [id], onDelete: SetNull)
+  chain     Chain?  @relation(fields: [chainId], references: [id], onDelete: SetNull)
+
+  @@index([recipientId])
+  @@index([fromUserId])
+  @@index([type])
+  @@index([createdAt(sort: Desc)])
+}
+
+model Follow {
+  followerId Int
+  followedId Int
+  createdAt  DateTime @default(now())
+
+  follower User @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followed User @relation("Followed", fields: [followedId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followedId])
+  @@index([followerId])
+  @@index([followedId])
+}
