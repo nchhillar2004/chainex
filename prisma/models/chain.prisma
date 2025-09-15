@@ -1,7 +1,7 @@
 model Chain {
   id          Int                @id @default(autoincrement())
   name        String             @unique
-  description String?
+  description String?            @db.VarChar(255)
   creatorId   Int
   visibility  ChainVisibility    @default(PUBLIC)
   postPolicy  ChainPostingPolicy @default(VERIFIED_ONLY)

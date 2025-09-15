@@ -1,15 +1,25 @@
 'use client'
 import { register } from "@/actions/register";
-import { useActionState } from "react";
+import { redirect } from "next/navigation";
+import { useActionState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function RegisterForm(){
     const [state, action, pending] = useActionState(register, undefined);
+
+    useEffect(() => {
+        if (state?.userId) {
+            toast.success(<p>Registered successfully</p>);
+            toast.info(<p>Login now to access your account</p>);
+            redirect("/auth/login");
+        }
+    }, [state])
 
     return(
         <form action={action} className="my-4 space-y-1">
             <div>
                 <label htmlFor="username">Username<span className="text-red-500">*</span>:</label>
-                <input className="outline-none border border-zinc-600 py-1 px-2" placeholder="your_username" type="text" id="username" name="username" minLength={3} maxLength={20} required />
+                <input className="outline-none border border-zinc-600 py-1 px-2" placeholder="your_username" type="text" id="username" name="username" required />
                 {state?.errors?.username && <small className="error">{state.errors.username}</small>}
             </div>
             <div>

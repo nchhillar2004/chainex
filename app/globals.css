@@ -37,8 +37,6 @@ div > .info {
 }
 
 form > div {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 12px;
 }
 
@@ -51,6 +49,12 @@ body {
 .link > a{
     text-decoration: underline;
     color: var(--text-color);
+}
+
+input, textarea{
+    outline: none;
+    border: 1px solid #404040;
+    padding: 2px 4px;
 }
 
 .divider{

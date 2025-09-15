@@ -1,12 +1,9 @@
 "use server"
 import prisma from "@/lib/db";
 import { RegisterFormState, RegisterationFormSchema } from "@/lib/definitions";
-import { createSession } from "@/lib/session";
 import { getUserLocation } from "@/utils/location";
 import { getCurrentTime } from "@/utils/time";
 import bcrypt from "bcryptjs";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export async function register(state: RegisterFormState, formData: FormData) {
     const validatedFields = RegisterationFormSchema.safeParse({
@@ -24,31 +21,32 @@ export async function register(state: RegisterFormState, formData: FormData) {
 
     const { username, email, password } = validatedFields.data;
 
+    if (email) {
+        const exists = await prisma.user.findFirst({
+            where: { email: email }
+        })
+
+        if (exists) {
+            throw new Error("Email already registered");
+        }
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10)
-    const location = await getUserLocation();
+    const { geoData, country, timezone } = await getUserLocation();
     const time = getCurrentTime();
 
     try{
         const user = await prisma.user.create({
             data: {
                 username: username,
-                email: email ?? null,
+                email: email,
                 password: hashedPassword,
-                ip: location,
+                geoData: geoData,
+                country: country,
+                timezone: timezone,
                 time: time
             },
         });
-
-        const sessionId = await createSession(user.id);
-
-        const cookieStore = await cookies()
-        cookieStore.set("sessionId", sessionId, {
-            httpOnly: true,
-            secure: true,
-            maxAge: 60 * 60 * 24 * 7,
-            sameSite: "lax",
-            path: "/",
-        })
 
         return { message: "User registered successfully", userId: user.id };
     } catch (err: any) {

@@ -3,21 +3,23 @@
 model User {
   id          Int     @id @default(autoincrement())
   username    String  @unique
-  email       String? @unique
+  email       String?
   password    String
   fullname    String?
   dob         String?
   schoolName  String?
-  schoolEmail String? @unique
+  schoolEmail String?
   avatarUrl   String?
-  bio         String?
+  bio         String?   @db.VarChar(255)
 
   experience Int        @default(0)
   level      Int        @default(1)
   role       Role       @default(USER)
   status     UserStatus @default(ACTIVE)
   isVerified Boolean    @default(false)
-  ip         String?
+  geoData    String     @db.VarChar(255)
+  timezone   String
+  country    String
 
   // relations
   verification          VerificationRequest?
@@ -56,6 +58,7 @@ model VerificationRequest {
 
   status  VerificationStatus @default(PENDING)
   remarks String?
+  geoData      String  @db.VarChar(255)
 
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   referralCode ReferralCode? @relation(fields: [referralCodeId], references: [id])
