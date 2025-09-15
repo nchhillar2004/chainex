@@ -1,6 +1,11 @@
 import { Config } from "@/config/config";
 import VerificationForm from "@/components/forms/VerificationForm";
 import Link from "next/link";
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: `Verify | ${Config.name}`
+};
 
 export default function VerificationPage(){
     return(

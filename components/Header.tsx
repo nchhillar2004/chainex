@@ -3,9 +3,21 @@ import Link from "next/link";
 import { Config } from "@/config/config";
 import { useTheme } from "@/context/ThemeContext";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { logout } from "@/actions/logout";
+import { User } from "@prisma/client";
 
 export default function Header(){
-    const isAuthenticated: boolean = false;
+    const [user, setUser] = useState<User | null>(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    
+    useEffect(() => {
+        fetch("/api/current-user")
+        .then((res) => res.json())
+        .then((data) => setUser(data));
+
+        if (user) setIsAuthenticated(true);
+    }, []);
 
     const {theme, setTheme} = useTheme();
 
@@ -19,13 +31,14 @@ export default function Header(){
 
     const handleLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
+        logout();
     }
 
     return(
         <header className="py-2 px-4 max-sm:px-2">
             <nav className="flex items-center justify-between space-x-1 flex-wrap">
                 <div className="flex space-x-1 items-center cursor-pointer">
-                    <Image priority src="/logo.svg" alt={`${Config.name} logo`} height={26} width={26} className="max-sm:h-[20px] max-sm:w-[20px]" onClick={toggleTheme}/>
+                    <Image src="/logo.svg" alt={`${Config.name} logo`} height={26} width={26} className="max-sm:h-[20px] max-sm:w-auto" onClick={toggleTheme}/>
                     <Link href={"/"}>
                         <h1 className="text-2xl font-semibold max-sm:text-xl">{Config.name}</h1>
                     </Link>
@@ -34,9 +47,9 @@ export default function Header(){
                 <nav className="flex items-center link">
                     {isAuthenticated ? 
                         <>
-                            <Link href={"create/thread"}>[create]</Link>
+                            <Link href={"/t/create/"}>[create]</Link>
                             <div className="divider"></div>
-                            <Link href={"profile"}>[profile]</Link>
+                            <Link href={"/u/profile"}>[{user?.username}]</Link>
                             <div className="divider"></div>
                             <Link href={"/"} onClick={handleLogout}>[logout]</Link>
                         </>
