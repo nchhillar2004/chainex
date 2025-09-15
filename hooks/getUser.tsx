@@ -3,6 +3,8 @@ import prisma from "@/lib/db";
 
 export async function getCurrentUser() {
     const session = await verifySession();
+    
+    if (!session) return null;
 
     return getUserById(session.userId);
 };

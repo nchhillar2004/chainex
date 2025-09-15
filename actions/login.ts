@@ -4,7 +4,6 @@ import { LoginFormSchema, LoginFormState } from "@/lib/definitions"
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { createSession } from "@/lib/session";
-import { redirect } from "next/navigation";
 
 export async function login(state: LoginFormState, formData: FormData) {
     const validatedFields = LoginFormSchema.safeParse({
@@ -46,8 +45,7 @@ export async function login(state: LoginFormState, formData: FormData) {
             path: "/",
         })
 
-        redirect("/");
-        //return { message: "User logged in successfully", userId: user.id };
+        return { message: "User logged in successfully", user: user };
     } catch (err: any) {
         throw err;
     }

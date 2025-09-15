@@ -3,22 +3,13 @@ import Link from "next/link";
 import { Config } from "@/config/config";
 import { useTheme } from "@/context/ThemeContext";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { logout } from "@/actions/logout";
-import { User } from "@prisma/client";
+import { useAuth } from "@/context/AuthContext";
+import { toast } from "react-toastify";
+import { redirect } from "next/navigation";
 
 export default function Header(){
-    const [user, setUser] = useState<User | null>(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    
-    useEffect(() => {
-        fetch("/api/current-user")
-        .then((res) => res.json())
-        .then((data) => setUser(data));
-
-        if (user) setIsAuthenticated(true);
-    }, []);
-
+    const { user, setUser } = useAuth();
     const {theme, setTheme} = useTheme();
 
     const toggleTheme = () => {
@@ -29,9 +20,11 @@ export default function Header(){
         }
     };
 
-    const handleLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        logout();
+    const handleLogout = async () => {
+        await logout();
+        setUser(null);
+        toast.success(<p>User logged out</p>);
+        redirect("/auth/login");
     }
 
     return(
@@ -45,7 +38,7 @@ export default function Header(){
                 </div>
 
                 <nav className="flex items-center link">
-                    {isAuthenticated ? 
+                    {user ? 
                         <>
                             <Link href={"/t/create/"}>[create]</Link>
                             <div className="divider"></div>
