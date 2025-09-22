@@ -1,6 +1,13 @@
 import { getCommits } from "@/utils/github";
 import Link from "next/link";
 
+interface GitHubCommit {
+    commit: {
+        message: string;
+    },
+    html_url: string;
+}
+
 export default async function UpdatesCard(){
     const commits = await getCommits();
 
@@ -11,7 +18,7 @@ export default async function UpdatesCard(){
             </div>
             <div className="py-2 px-4 border-b border-x border-[var(--border)] bg-[var(--card-bg)] rounded-b-md link">
                 <ul className="">
-                    {commits && commits.map((commit: any) => (
+                    {commits && commits.map((commit: GitHubCommit) => (
                         <li className="flex space-x-4 h-fit" key={commit.html_url}>
                             <div className="w-[8px] h-full">
                                 <div className="w-[8px] h-[8px] rounded-full bg-[#343434]"></div>

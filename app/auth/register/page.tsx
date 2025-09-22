@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RegisterPage(){
-    let count = await prisma.user.count();
+    const count = await prisma.user.count();
     return(
         <>
             {count >= Config.USER_CAP - 1000 ? 

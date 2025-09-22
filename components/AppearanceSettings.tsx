@@ -1,7 +1,8 @@
 'use client'
 import { useCustomAppearance } from "@/context/CustomAppearanceContext";
+import { FontFamily, FontSize, FontWeight } from "@/types/AppearanceSettingTypes";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 export default function AppearanceSettings() {
     const { theme, setTheme } = useTheme();
@@ -112,7 +113,7 @@ export default function AppearanceSettings() {
                     <div className="flex flex-col space-y-2">
                         <div>
                             <label htmlFor="font-family">Font family:</label>
-                            <select id="font-family" onChange={(e: any) => setFontFamily(e.target.value)} defaultValue={fontFamily}>
+                            <select id="font-family" onChange={(e: ChangeEvent<HTMLSelectElement>) => setFontFamily(e.target.value as FontFamily)} defaultValue={fontFamily}>
                                 <option value={"IBM Plex Mono"}>IBM Plex Mono</option>
                                 <option value={"cursive"}>Cursive</option>
                                 <option value={"Helvetica"}>Helvetica</option>
@@ -124,7 +125,7 @@ export default function AppearanceSettings() {
                         </div>
                         <div>
                             <label htmlFor="font-size">Font size:</label>
-                            <select id="font-size" onChange={(e: any) => setFontSize(e.target.value)} defaultValue={fontSize}>
+                            <select id="font-size" onChange={(e: ChangeEvent<HTMLSelectElement>) => setFontSize(e.target.value as FontSize)} defaultValue={fontSize}>
                                 <option value={"12px"}>12px</option>
                                 <option value={"13px"}>13px</option>
                                 <option value={"14px"}>14px</option>
@@ -136,7 +137,7 @@ export default function AppearanceSettings() {
                         </div>
                         <div>
                             <label htmlFor="font-weight">Font weight:</label>
-                            <select id="font-weight" onChange={(e: any) => setFontWeight(e.target.value)} defaultValue={fontWeight}>
+                            <select id="font-weight" onChange={(e: ChangeEvent<HTMLSelectElement>) => setFontWeight(e.target.value as FontWeight)} defaultValue={fontWeight}>
                                 <option value={"200"}>200</option>
                                 <option value={"300"}>300</option>
                                 <option value={"400"}>400</option>

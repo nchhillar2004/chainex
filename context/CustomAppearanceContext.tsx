@@ -1,11 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-
-type LinkColor = "yellow" | "rose" | "blue" | "green";
-type FontFamily = "IBM Plex Mono" | "cursive" | "Helvetica" | "monospace" | "serif" | "system-ui" | "Times New Roman";
-type FontSize = "12px" | "13px" | "14px" | "15px" | "16px" | "17px" | "18px";
-type FontWeight = "200" | "300" | "400" | "500" | "600";
+import { LinkColor, FontFamily, FontSize, FontWeight } from "@/types/AppearanceSettingTypes";
 
 interface CustomAppearanceContextType {
     linkColor: LinkColor;
