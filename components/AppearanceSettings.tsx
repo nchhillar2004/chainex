@@ -28,6 +28,7 @@ export default function AppearanceSettings() {
                                 type="radio"
                                 value="system"
                                 name="system"
+                                id="system"
                                 checked={theme==="system"}
                                 onChange={() => setTheme("system")}
                             />
@@ -38,6 +39,7 @@ export default function AppearanceSettings() {
                                 type="radio"
                                 value="light"
                                 name="light"
+                                id="light"
                                 checked={theme==="light"}
                                 onChange={() => setTheme("light")}
                             />
@@ -48,6 +50,7 @@ export default function AppearanceSettings() {
                                 type="radio"
                                 value="dark"
                                 name="dark"
+                                id="dark"
                                 checked={theme==="dark"}
                                 onChange={() => setTheme("dark")}
                             />
@@ -63,6 +66,7 @@ export default function AppearanceSettings() {
                                 type="radio"
                                 value="yellow"
                                 name="gold"
+                                id="gold"
                                 checked={linkColor==="yellow"}
                                 onChange={() => setLinkColor("yellow")}
                             />
@@ -73,6 +77,7 @@ export default function AppearanceSettings() {
                                 type="radio"
                                 value="blue"
                                 name="blue"
+                                id="blue"
                                 checked={linkColor==="blue"}
                                 onChange={() => setLinkColor("blue")}
                             />
@@ -83,6 +88,7 @@ export default function AppearanceSettings() {
                                 type="radio"
                                 value="rose"
                                 name="rose"
+                                id="rose"
                                 checked={linkColor==="rose"}
                                 onChange={() => setLinkColor("rose")}
                             />
@@ -93,6 +99,7 @@ export default function AppearanceSettings() {
                                 type="radio"
                                 value="green"
                                 name="green"
+                                id="green"
                                 checked={linkColor==="green"}
                                 onChange={() => setLinkColor("green")}
                             />
@@ -105,7 +112,7 @@ export default function AppearanceSettings() {
                     <div className="flex flex-col space-y-2">
                         <div>
                             <label htmlFor="font-family">Font family:</label>
-                            <select onChange={(e: any) => setFontFamily(e.target.value)} defaultValue={fontFamily}>
+                            <select id="font-family" onChange={(e: any) => setFontFamily(e.target.value)} defaultValue={fontFamily}>
                                 <option value={"IBM Plex Mono"}>IBM Plex Mono</option>
                                 <option value={"cursive"}>Cursive</option>
                                 <option value={"Helvetica"}>Helvetica</option>
@@ -117,7 +124,7 @@ export default function AppearanceSettings() {
                         </div>
                         <div>
                             <label htmlFor="font-size">Font size:</label>
-                            <select onChange={(e: any) => setFontSize(e.target.value)} defaultValue={fontSize}>
+                            <select id="font-size" onChange={(e: any) => setFontSize(e.target.value)} defaultValue={fontSize}>
                                 <option value={"12px"}>12px</option>
                                 <option value={"13px"}>13px</option>
                                 <option value={"14px"}>14px</option>
@@ -129,7 +136,7 @@ export default function AppearanceSettings() {
                         </div>
                         <div>
                             <label htmlFor="font-weight">Font weight:</label>
-                            <select onChange={(e: any) => setFontWeight(e.target.value)} defaultValue={fontWeight}>
+                            <select id="font-weight" onChange={(e: any) => setFontWeight(e.target.value)} defaultValue={fontWeight}>
                                 <option value={"200"}>200</option>
                                 <option value={"300"}>300</option>
                                 <option value={"400"}>400</option>
