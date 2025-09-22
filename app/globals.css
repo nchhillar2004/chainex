@@ -21,7 +21,7 @@
         --background: #101010;
         --text-color: #dee2e6;
         --card-bg: #202020;
-        --card-header: #101010;
+        --card-header: #151515;
         --border: #404040;
         --link: #faa500;
         --button: #303030;
@@ -101,7 +101,7 @@ form button {
 input, textarea, select, option{
     outline: none;
     border: 1px solid var(--border);
-    background-color: var(--background);
+    background-color: var(--card-header);
     padding: 4px 8px;
 }
 

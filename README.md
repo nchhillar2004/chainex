@@ -5,4 +5,6 @@
 #### Tech Stack:
 - Next.js
 - Typescript
-- NextAuth
+- Prisma
+- MySQL
+- Redis

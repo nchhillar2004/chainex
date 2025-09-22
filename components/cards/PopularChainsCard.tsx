@@ -5,7 +5,7 @@ export default function PopularChainsCard() {
     <div>
             <div className="py-2 px-4 border border-[var(--border)] rounded-t-md bg-[var(--card-header)] flex items-center justify-between space-x-4">
                 <b className="text-[16px]">Popular chains</b>
-                <select defaultValue={"members"}>
+                <select defaultValue={"members"} disabled>
                     <option defaultChecked value={"members"}>members</option>
                     <option value={"threads"}>threads</option>
                 </select>

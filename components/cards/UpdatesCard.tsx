@@ -12,7 +12,7 @@ export default async function UpdatesCard(){
     const commits = await getCommits();
 
     return(
-        <div className="max-w-[380px]">
+        <div>
             <div className="py-2 px-4 border border-[var(--border)] rounded-t-md bg-[var(--card-header)] flex items-center justify-between space-x-4">
                 <b className="text-[16px]">Latest changes</b>
             </div>
