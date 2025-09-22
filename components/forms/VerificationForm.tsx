@@ -22,7 +22,7 @@ export default function VerificationForm(){
             </div>
             <div>
                 <label htmlFor="document">Upload a valid document (school id card, fee receipt)<span className="text-red-500">*</span>:</label>
-                <input className="outline-none border border-zinc-600 bg-[#202020] py-1 px-2" type="file" id="document" accept=".jpg, .jpeg, .png, .pdf" required />
+                <input className="outline-none border border-zinc-600 bg-[var(--button)] py-1 px-2" type="file" id="document" accept=".jpg, .jpeg, .png, .pdf" required />
                 <small className="info">Upload a valid document, issued by school/ institute (within 6 months from now) which:
                     <ul className="list-disc list-inside">
                         <li>Should include your full name</li>
@@ -43,7 +43,7 @@ export default function VerificationForm(){
                     I confirm that I am currently a student<span className="text-red-500">*</span>.
                 </span>
             </label>
-            <button type="submit" className="border border-zinc-600 bg-[#303030] py-1 cursor-pointer hover:bg-[#282828]">Submit</button>
+            <button type="submit" className="border border-[var(--border)] bg-[var(--button)] py-1 cursor-pointer hover:brightness-90">Submit</button>
         </form>
     );
 }

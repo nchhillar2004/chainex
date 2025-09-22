@@ -6,10 +6,10 @@ export default async function UpdatesCard(){
 
     return(
         <div className="max-w-[380px]">
-            <div className="py-2 px-4 border border-[#404040] rounded-t-md bg-[#151515] flex items-center justify-between space-x-4">
+            <div className="py-2 px-4 border border-[var(--border)] rounded-t-md bg-[var(--card-header)] flex items-center justify-between space-x-4">
                 <b className="text-[16px]">Latest changes</b>
             </div>
-            <div className="py-2 px-4 border-b border-x border-[#404040] bg-[#202020] rounded-b-md link">
+            <div className="py-2 px-4 border-b border-x border-[var(--border)] bg-[var(--card-bg)] rounded-b-md link">
                 <ul className="">
                     {commits && commits.map((commit: any) => (
                         <li className="flex space-x-4 h-fit" key={commit.html_url}>

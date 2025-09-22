@@ -12,7 +12,7 @@ export default async function CreateThreadForm() {
         }
     });
     return (
-        <div className="py-4 px-8 max-sm:px-2 bg-[#202020] min-sm:rounded-xl border border-[#404040] mb-4">
+        <div className="py-4 px-8 max-sm:px-2 bg-[var(--card-bg)] min-sm:rounded-xl border border-[var(--border)]">
             <h1 className="font-bold text-2xl mb-4">Create Thread</h1>
             <form>
                 <div className="flex max-md:flex-col max-md:space-y-2 min-md:space-x-2 min-md:justify-between">

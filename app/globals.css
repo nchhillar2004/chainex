@@ -1,31 +1,69 @@
 @import "tailwindcss";
 
-.yellow{
-    --text-color: #faa500;
-}
-
-.blue{
-    --text-color: #51a2ff;
-}
-
-:root {
-    --background: #404040;
-    --foreground: #ffffff;
-    font-size: 14px;
-}
-
-@theme inline {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --font-sans: var(--font-ibm-plex-sans);
-    --font-mono: var(--font-ibm-plex-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #101010;
-        --foreground: #ffffff;
+@layer base{
+    :root{
+        --font-family: "IBM Plex Mono";
+        --font-size: 14px;
+        --font-weight: 400;
     }
+
+    :root, html[data-theme='light'] {
+        --background: #ffffff;
+        --text-color: #212529;
+        --card-bg: #f8f9fa;
+        --card-header: #e9ecef;
+        --border: #dee2e6;
+        --link: #c2410c;
+        --button: #c2410c;
+    }
+
+    html[data-theme='dark'] {
+        --background: #212529;
+        --text-color: #dee2e6;
+        --card-bg: #343a40;
+        --card-header: #495057;
+        --border: #495057;
+        --link: #faa500;
+        --button: #faa500;
+    }
+
+    html[data-theme='light'][data-link-color='yellow'] {
+        --link: #c2410c;
+    }
+
+    html[data-theme='light'][data-link-color='rose'] {
+        --link: hotpink;
+    }
+
+    html[data-theme='light'][data-link-color='blue'] {
+        --link: blue;
+    }
+
+    html[data-theme='light'][data-link-color='green'] {
+        --link: green;
+    }
+
+    html[data-theme='dark'][data-link-color='yellow'] {
+        --link: #faa500;
+    }
+
+    html[data-theme='dark'][data-link-color='rose'] {
+        --link: #f43f5e;
+    }
+
+    html[data-theme='dark'][data-link-color='blue'] {
+        --link: #60a5fa;
+    }
+
+    html[data-theme='dark'][data-link-color='green'] {
+        --link: #4ade80;
+    }
+}
+
+html {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    font-weight: var(--font-weight);
 }
 
 div .info, small {
@@ -40,26 +78,20 @@ form > div {
     margin-bottom: 12px;
 }
 
-body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family: "IBM Plex Mono";
-}
-
 .link a{
     text-decoration: underline;
-    color: var(--text-color);
+    color: var(--link);
 }
 
 input, textarea{
     outline: none;
-    border: 1px solid #404040;
+    border: 1px solid var(--border);
     padding: 2px 4px;
 }
 
 .divider{
     width: 1px;
-    background-color: grey;
+    background-color: var(--border);
     height: 14px;
     margin: 0px 8px;
 }

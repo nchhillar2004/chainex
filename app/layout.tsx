@@ -2,13 +2,14 @@ import type { Metadata } from 'next';
 import { IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Config } from "@/config/config";
-import { ThemeProvider } from "@/context/ThemeContext";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Analytics } from '@vercel/analytics/next';
 import { AuthProvider } from '@/context/AuthContext';
 import { Slide, ToastContainer } from 'react-toastify';
 import { getCurrentUser } from '@/hooks/getUser';
+import { CustomAppearanceProvider } from '@/context/CustomAppearanceContext';
 
 const ibmPlexMono = IBM_Plex_Mono({
     variable: "--font-ibm-plex-mono",
@@ -28,28 +29,35 @@ export default async function RootLayout({
     }>) {
     const user = await getCurrentUser();
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body
-                className={`${ibmPlexMono.variable} antialiased`}
-                suppressHydrationWarning>
+                className={`${ibmPlexMono.variable} antialiased`}>
                 <AuthProvider user={user}>
-                    <ThemeProvider>
-                        <ToastContainer
-                            position='bottom-right'
-                            limit={2}
-                            hideProgressBar
-                            transition={Slide}
-                            autoClose={4000}
-                            theme='dark'
-                        />
-                        <div className={`${Config.name} container m-auto`}>
-                            <Header/>
-                            <main className="py-2 px-4 max-sm:px-2">
-                                {children}
-                                <Analytics debug={false} />
-                            </main>
-                            <Footer/>
-                        </div>
+                    <ThemeProvider
+                        attribute="data-theme"
+                        enableSystem={true}
+                        defaultTheme="system"
+                        enableColorScheme
+                        themes={['system', 'light', 'dark', 'gold', 'blue', 'rose', 'green']}
+                        disableTransitionOnChange
+                        scriptProps={{ 'data-cfasync': 'false' }}>
+                        <CustomAppearanceProvider>
+                            <ToastContainer
+                                position='bottom-right'
+                                limit={2}
+                                hideProgressBar
+                                transition={Slide}
+                                autoClose={4000}
+                            />
+                            <div className={`${Config.name} container m-auto`}>
+                                <Header/>
+                                <main className="py-2 px-4 max-sm:px-2">
+                                    {children}
+                                    <Analytics debug={false} />
+                                </main>
+                                <Footer/>
+                            </div>
+                        </CustomAppearanceProvider>
                     </ThemeProvider>
                 </AuthProvider>
             </body>

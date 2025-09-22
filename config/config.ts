@@ -4,5 +4,7 @@ export const Config = {
     github: {
         username: "nchhillar2004",
         repo: "chainex"
-    }
+    },
+    USER_CAP: 9999,
+    UPLOAD_CAP_MB: 20,
 }

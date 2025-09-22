@@ -7,11 +7,11 @@ import { MdGroups } from "react-icons/md";
 import { FaSchoolLock } from "react-icons/fa6";
 import { FaCode } from "react-icons/fa";
 import { FaShieldAlt } from "react-icons/fa";
-import LoginForm from "./forms/LoginForm";
+import LoginForm from "@/components/forms/LoginForm";
 
 export default function MainWelcomeCard() {
     return(
-        <div className="py-4 px-8 max-sm:px-2 bg-[#202020] min-sm:rounded-xl border border-[#404040]">
+        <div className="py-4 px-8 max-sm:px-2 bg-[var(--card-bg)] min-sm:rounded-xl border border-[var(--border)]">
             <div className="text-center">
                 <h1 className="font-bold min-lg:text-5xl max-sm:text-2xl min-sm:text-3xl my-2">{"> Connect. Share. Learn."}</h1>
                 <p className="text-zinc-400 lg:text-xl min-md:max-w-[60%] m-auto py-2">The ultimate text-image board <b>only for students.</b> Ask question, share
