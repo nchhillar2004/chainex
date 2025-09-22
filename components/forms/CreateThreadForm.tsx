@@ -12,12 +12,13 @@ export default async function CreateThreadForm() {
         }
     });
     return (
-        <div className="py-4 px-8 max-sm:px-2 bg-[#202020] min-sm:rounded-xl border border-[#404040]">
+        <div className="py-4 px-8 max-sm:px-2 bg-[#202020] min-sm:rounded-xl border border-[#404040] mb-4">
+            <h1 className="font-bold text-2xl mb-4">Create Thread</h1>
             <form>
                 <div className="flex max-md:flex-col max-md:space-y-2 min-md:space-x-2 min-md:justify-between">
                     <div className="min-md:w-[50%] w-full">
                         <label htmlFor="title">Thread title<span className="text-red-500">*</span>:</label><br/>
-                        <input placeholder="Give a brief title" type="text" id="title" name="title" autoComplete="off" required/>
+                        <input placeholder="Give a brief title" className="w-full" type="text" id="title" name="title" autoComplete="off" required/>
                     </div>
                     <div>
                         <label htmlFor="chain">Select a chain<span className="text-red-500">*</span>:</label><br/>
