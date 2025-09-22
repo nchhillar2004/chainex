@@ -19,7 +19,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-    title: Config.name
+    title: Config.name,
+    description: Config.description
 };
 
 export default async function RootLayout({

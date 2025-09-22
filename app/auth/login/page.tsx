@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function LoginPage(){
     return(
         <>
-            <div className="py-2 px-4 rounded-md border border-[#404040] max-w-[420px] m-auto">
+            <div className="card max-w-[420px] m-auto">
                 <b className="text-xl">Login Form</b>
                 <p>Fill this form to access your account.</p>
                 <LoginForm/>

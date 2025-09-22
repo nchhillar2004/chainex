@@ -19,13 +19,17 @@ export default function LoginForm(){
     }, [state, setUser]);
 
     return(
-        <form action={action} className="my-3 flex flex-col space-y-1">
-            <label htmlFor="username">Username:</label>
-            <input className="mb-3" placeholder="your_username" type="text" id="username" name="username" required />
-            <label htmlFor="password">Password:</label>
-            <input className="mb-3" placeholder="password" type="password" id="password" name="password" required />
+        <form action={action} className="my-3 space-y-1">
+            <div>
+                <label htmlFor="username">Username:</label>
+                <input placeholder="your_username" type="text" id="username" name="username" required />
+            </div>
+            <div>
+                <label htmlFor="password">Password:</label>
+                <input placeholder="password" type="password" id="password" name="password" required />
+            </div>
             {state?.error && <div><small className="error">{state.error}</small></div>}
-            <button type="submit" disabled={pending} className="border border-zinc-599 bg-[#303030] py-1 cursor-pointer hover:bg-[#282828]">Login</button>
+            <button type="submit" disabled={pending}>Login</button>
         </form>
 
     );

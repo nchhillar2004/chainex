@@ -18,4 +18,4 @@ export async function getUserById(userId: number) {
 
     if (!user) return null;
     return user;
-}
+};

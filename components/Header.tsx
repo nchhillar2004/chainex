@@ -28,10 +28,10 @@ export default function Header(){
                 </div>
 
                 <nav className="flex items-center link">
+                    <Link href={"/appearance"}>[appearance]</Link>
+                    <div className="divider"></div>
                     {user ? 
                         <>
-                            <Link href={"/t/create/"}>[create]</Link>
-                            <div className="divider"></div>
                             <Link href={"/u/profile"}>[{user?.username}]</Link>
                             <div className="divider"></div>
                             <Link href={"/"} onClick={handleLogout}>[logout]</Link>

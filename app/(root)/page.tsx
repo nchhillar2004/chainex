@@ -1,4 +1,3 @@
-import PopularCommunitesCard from "@/components/cards/PopularCommunitiesCard";
 import StatusCard from "@/components/cards/StatusCard";
 import UpdatesCard from "@/components/cards/UpdatesCard";
 import CreateThreadForm from "@/components/forms/CreateThreadForm";
@@ -7,6 +6,7 @@ import Marquee from "@/components/ui/Marquee";
 import { Config } from '@/config/config';
 import { getCurrentUser } from "@/hooks/getUser";
 import type { Metadata } from 'next';
+import PopularChainsCard from "@/components/cards/PopularChainsCard";
 
 export const metadata: Metadata = {
     title: `Home | ${Config.name}`
@@ -20,7 +20,7 @@ export default async function Home(){
             <Marquee messages={[
                 {text: `Welcome to ${Config.name}`, emoji: ""},
                 {text: `${Config.description}`, emoji: ""},
-                {text: "This is a beta version", emoji: ""},
+                {text: "This is beta version", emoji: ""},
                 {text: "Advertise your community here", emoji: "📺"}
             ]} />
             </div>
@@ -32,7 +32,7 @@ export default async function Home(){
                     <h2 className="text-xl font-semibold">Popular Threads</h2>
                 </div>
                 <div className="space-y-4">
-                    <PopularCommunitesCard/>
+                    <PopularChainsCard/>
                     <StatusCard/>
                     <div className="max-md:hidden">
                         <UpdatesCard/>

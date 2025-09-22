@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-export default function PopularCommunitesCard() {
+export default function PopularChainsCard() {
     return(
     <div>
             <div className="py-2 px-4 border border-[var(--border)] rounded-t-md bg-[var(--card-header)] flex items-center justify-between space-x-4">
-                <b className="text-[16px]">Popular communities</b>
+                <b className="text-[16px]">Popular chains</b>
                 <select defaultValue={"members"}>
                     <option defaultChecked value={"members"}>members</option>
                     <option value={"threads"}>threads</option>

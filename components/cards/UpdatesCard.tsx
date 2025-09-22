@@ -21,8 +21,8 @@ export default async function UpdatesCard(){
                     {commits && commits.map((commit: GitHubCommit) => (
                         <li className="flex space-x-4 h-fit" key={commit.html_url}>
                             <div className="w-[8px] h-full">
-                                <div className="w-[8px] h-[8px] rounded-full bg-[#343434]"></div>
-                                <div className="w-[2px] m-auto -mt-[1px] min-h-[24px] h-full bg-[#343434]"></div>
+                                <div className="w-[8px] h-[8px] rounded-full bg-[var(--border)]"></div>
+                                <div className="w-[2px] m-auto -mt-[1px] min-h-[24px] h-full bg-[var(--border)]"></div>
                             </div>
                             <Link href={commit.html_url} target="_blank">{commit.commit?.message}</Link>
                         </li>))}

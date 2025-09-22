@@ -21,7 +21,7 @@ export default function AppearanceSettings() {
             <p>Why stay default when you can customize your web experience ;)</p>
             <h1 className="text-2xl font-bold mb-4">Appearance</h1>
             <div className="space-y-2">
-                <div>
+                <div className="card">
                     <p className="text-xl">Select Theme</p>
                     <div className="flex space-x-4 items-center">
                         <label htmlFor="system">
@@ -59,7 +59,7 @@ export default function AppearanceSettings() {
                         </label>
                     </div>
                 </div>
-                <div>
+                <div className="card">
                     <p className="text-xl">Select Color</p>
                     <div className="flex space-x-4 items-center">
                         <label htmlFor="gold">
@@ -108,7 +108,7 @@ export default function AppearanceSettings() {
                         </label>
                     </div>
                 </div>
-                <div>
+                <div className="card">
                     <p className="text-xl">Font customization</p>
                     <div className="flex flex-col space-y-2">
                         <div>
@@ -147,17 +147,17 @@ export default function AppearanceSettings() {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className="card">
                     <p className="text-xl">Custom background</p>
                     <label htmlFor="custom-bg">Upload a custom background:</label>
-                    <input type="file" accept=".jpg, .jpeg, .png, .gif" />
+                    <input type="file" accept=".jpg, .jpeg, .png, .gif" /><br/>
                     <button onClick={setBg}>Set background</button>
                 </div>
-                <div>
+                <div className="card">
                     <p className="text-xl">Gradient Color Theme</p>
                     <p>Comming soon...</p>
                 </div>
-                <div>
+                <div className="card">
                     <p className="text-xl">In-app Icon</p>
                     <p>Comming soon...</p>
                 </div>

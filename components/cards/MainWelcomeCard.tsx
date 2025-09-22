@@ -22,19 +22,19 @@ export default function MainWelcomeCard() {
             <div className="flex justify-around items-start flex-col min-md:flex-row max-md:space-y-4 ">
                 <div>
                     <h2 className="font-semibold min-lg:text-3xl min-sm:text-xl max-sm:text-[16px] flex items-center space-x-2">
-                        <MdChecklist className="text-[var(--text-color)]"/> <span>Core Features</span></h2>
+                        <MdChecklist className="text-[var(--link)]"/> <span>Core Features</span></h2>
                     <ul className="list-inside ml-2 lg:text-xl">
-                        <li className="flex items-center space-x-1 my-2"><MdOutlineQuestionAnswer className="text-[var(--text-color)] mr-2" />Text/ Image Boards</li>
-                        <li className="flex items-center space-x-1 my-2"><FaRegQuestionCircle className="text-[var(--text-color)] mr-2" />Question/ Answer Forums</li>
-                        <li className="flex items-center space-x-1 my-2"><MdGroups className="text-[var(--text-color)] mr-2" />Community (Chains) groups</li>
-                        <li className="flex items-center space-x-1 my-2"><FaShieldAlt className="text-[var(--text-color)] mr-2" />Ultra secure & private</li>
-                        <li className="flex items-center space-x-1 my-2"><FaSchoolLock className="text-[var(--text-color)] mr-2" />Only for school & Univ. students</li>
-                        <li className="flex items-center space-x-1 my-2"><FaCode className="text-[var(--text-color)] mr-2" />Completely Open source & transparent</li>
+                        <li className="flex items-center space-x-1 my-2"><MdOutlineQuestionAnswer className="text-[var(--link)] mr-2" />Text/ Image Boards</li>
+                        <li className="flex items-center space-x-1 my-2"><FaRegQuestionCircle className="text-[var(--link)] mr-2" />Question/ Answer Forums</li>
+                        <li className="flex items-center space-x-1 my-2"><MdGroups className="text-[var(--link)] mr-2" />Community (Chains) groups</li>
+                        <li className="flex items-center space-x-1 my-2"><FaShieldAlt className="text-[var(--link)] mr-2" />Ultra secure & private</li>
+                        <li className="flex items-center space-x-1 my-2"><FaSchoolLock className="text-[var(--link)] mr-2" />Only for school & Univ. students</li>
+                        <li className="flex items-center space-x-1 my-2"><FaCode className="text-[var(--link)] mr-2" />Completely Open source & transparent</li>
                     </ul>
                 </div>
                 <div className="max-sm:w-[90%]">
                     <h2 className="font-semibold min-lg:text-3xl min-sm:text-xl flex items-center max-sm:text-[16px] space-x-2">
-                        <MdOutlineLogin className="text-[var(--text-color)]"/>
+                        <MdOutlineLogin className="text-[var(--link)]"/>
                         <span>
                             Access Your Account
                         </span>

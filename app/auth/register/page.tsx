@@ -2,25 +2,26 @@ import type { Metadata } from 'next';
 import Link from "next/link";
 import { Config } from "@/config/config";
 import RegisterForm from "@/components/forms/RegisterForm";
-import prisma from '@/lib/db';
+import { getTotalUser } from '@/hooks/getStats';
 
 export const metadata: Metadata = {
     title: `Register | ${Config.name}`
 };
 
 export default async function RegisterPage(){
-    const count = await prisma.user.count();
+    const count = await getTotalUser();
     return(
         <>
-            {count >= Config.USER_CAP - 1000 ? 
+            <p>{count}/{Config.USER_CAP-1001} users registered</p>
+            {count >= Config.USER_CAP - 1001 ? 
                 <div>
                     <p>⚠️  We are not accepting new registrations for now. User limit will be updated shortly. Stay tuned!</p>
                 </div>
                 :
                 <div>
-                    <p>⏳ Hurry! Limited registrations available for now. Sign up before it’s full!</p>
+                    <p>⏳ Hurry up! Limited registrations available for now. Sign up before it’s full!</p>
                     <p>Required fields are marked with (<span className="text-red-500">*</span>)</p>
-                    <div className="py-2 px-4 rounded-md border border-[var(--border)] max-w-[450px] m-auto">
+                    <div className="card max-w-[450px] m-auto mt-2">
                         <b className="text-xl">Registeration Form</b>
                         <p>Fill this form to register on {Config.name}.</p>
                         <RegisterForm/>

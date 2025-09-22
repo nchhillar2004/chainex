@@ -14,17 +14,17 @@
         --card-header: #e9ecef;
         --border: #dee2e6;
         --link: #c2410c;
-        --button: #c2410c;
+        --button: whitesmoke;
     }
 
     html[data-theme='dark'] {
-        --background: #212529;
+        --background: #101010;
         --text-color: #dee2e6;
-        --card-bg: #343a40;
-        --card-header: #495057;
-        --border: #495057;
+        --card-bg: #202020;
+        --card-header: #101010;
+        --border: #404040;
         --link: #faa500;
-        --button: #faa500;
+        --button: #303030;
     }
 
     html[data-theme='light'][data-link-color='yellow'] {
@@ -61,6 +61,7 @@
 }
 
 html {
+    background-color: var(--background);
     font-family: var(--font-family);
     font-size: var(--font-size);
     font-weight: var(--font-weight);
@@ -75,7 +76,13 @@ div .info, small {
 }
 
 form > div {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 12px;
+}
+
+form button {
+    width: 100%;
 }
 
 .link a{
@@ -83,10 +90,33 @@ form > div {
     color: var(--link);
 }
 
-input, textarea{
+.card{
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--card-bg);
+}
+
+input, textarea, select, option{
     outline: none;
     border: 1px solid var(--border);
-    padding: 2px 4px;
+    background-color: var(--background);
+    padding: 4px 8px;
+}
+
+button{
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    background-color: var(--button);
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+label > input, label > select {
+    margin: 0px 8px;
 }
 
 .divider{

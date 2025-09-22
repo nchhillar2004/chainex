@@ -12,7 +12,7 @@ export default function VerificationPage(){
         <>
             <p>Required fields are marked with (<span className="text-red-500">*</span>)</p>
             <p>Follow all the instruction to get maximum chances of getting verified.</p>
-            <div className="py-2 px-4 rounded-md border border-[var(--border)] max-w-[450px] m-auto">
+            <div className="card max-w-[450px] m-auto mt-2">
                 <b className="text-xl">Verification Form</b>
                 <p>Get verified and access all features of {Config.name};)</p>
                 <VerificationForm />

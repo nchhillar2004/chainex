@@ -11,7 +11,7 @@ type Msg = {
 export default function Marquee({ messages }: { messages: Msg[] }) {
     return (
         <div className="overflow-hidden whitespace-nowrap">
-            <div className="animate-marquee text-lime-400 text-xl font-bold">
+            <div className="animate-marquee text-xl text-[var(--text-color)] font-semibold">
                 {messages.map((msg: Msg) => (
                     <Link href={msg.url ? msg.url : "#"} key={msg.text}>
                         {msg.emoji ? msg.emoji : "🚀"}{msg.text}{" "}
