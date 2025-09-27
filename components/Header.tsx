@@ -5,16 +5,17 @@ import Image from "next/image";
 import { logout } from "@/actions/logout";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "react-toastify";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Header(){
     const { user, setUser } = useAuth();
+    const router = useRouter();
 
     const handleLogout = async () => {
         await logout();
         setUser(null);
         toast.success(<p>User logged out</p>);
-        redirect("/auth/login");
+        router.push("/auth/login");
     }
 
     return(

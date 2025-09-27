@@ -54,9 +54,9 @@ export default async function RootLayout({
                                 <Header/>
                                 <main className="py-2 px-4 max-sm:px-2">
                                     {children}
-                                    <Analytics debug={false} />
                                 </main>
                                 <Footer/>
+                                <Analytics debug={false} />
                             </div>
                         </CustomAppearanceProvider>
                     </ThemeProvider>
