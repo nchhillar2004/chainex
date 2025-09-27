@@ -17,7 +17,7 @@ export default function LoginForm(){
             toast.success(<p>Logged in successfully</p>);
             router.push("/");
         }
-    }, [state, setUser]);
+    }, [state, setUser, router]);
 
     return(
         <form action={action} className="my-3 space-y-1">

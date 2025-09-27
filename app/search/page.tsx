@@ -4,20 +4,21 @@ import { Config } from '@/config/config';
 import Link from 'next/link';
 import { Chain, Thread, User } from '@prisma/client';
 
-interface SearchPageProps {
-    searchParams: { query?: string };
-}
-
 export const metadata: Metadata = {
     title: "Search Results",
 };
 
-export default async function SearchPage({ searchParams }: SearchPageProps) {
-    const query = searchParams.query?.trim();
+export default async function SearchPage( props: { searchParams?: Promise<{ query?: string; }> }) {
+    const searchParams = await props.searchParams;
+    const query = searchParams && searchParams.query?.trim();
 
+    if (!query){
+        return (
+            <SidebarLayout><p>Search something to get results!</p></SidebarLayout>
+        );
+    }
     const res = await fetch(`${Config.baseUrl}/api/search?query=${encodeURIComponent(query ?? '')}`, {cache: 'no-store'});
     const data = await res.json();
-    console.log(data);
 
     return (
         <div className='link'>
