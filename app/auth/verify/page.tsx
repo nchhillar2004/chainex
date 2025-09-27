@@ -2,12 +2,20 @@ import { Config } from "@/config/config";
 import VerificationForm from "@/components/forms/VerificationForm";
 import Link from "next/link";
 import type { Metadata } from 'next';
+import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/hooks/getUser";
 
 export const metadata: Metadata = {
     title: `Verify | ${Config.name}`
 };
 
-export default function VerificationPage(){
+export default async function VerificationPage(){
+    const user  = await getCurrentUser();
+
+    if (!user) {
+        redirect("/auth/login");
+    }
+
     return(
         <>
             <p>Required fields are marked with (<span className="text-red-500">*</span>)</p>

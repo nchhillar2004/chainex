@@ -2,12 +2,18 @@ import Link from "next/link";
 import LoginForm from "@/components/forms/LoginForm";
 import { Config } from '@/config/config';
 import type { Metadata } from 'next';
+import { verifySession } from "@/lib/dal";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
     title: `Login | ${Config.name}`
 };
 
-export default function LoginPage(){
+export default async function LoginPage(){
+    const session  = await verifySession();
+
+    if (session?.isAuth) redirect("/");
+
     return(
         <>
             <div className="card max-w-[420px] m-auto">

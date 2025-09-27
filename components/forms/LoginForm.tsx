@@ -20,18 +20,19 @@ export default function LoginForm(){
     }, [state, setUser, router]);
 
     return(
-        <form action={action} className="my-3 space-y-1">
-            <div>
-                <label htmlFor="username">Username:</label>
-                <input placeholder="your_username" type="text" id="username" name="username" required />
-            </div>
-            <div>
-                <label htmlFor="password">Password:</label>
-                <input placeholder="password" type="password" id="password" name="password" required />
-            </div>
-            {state?.error && <div><small className="error">{state.error}</small></div>}
-            <button type="submit" disabled={pending}>Login</button>
-        </form>
-
+        <>
+            <form action={action} className="my-3 space-y-1">
+                <div>
+                    <label htmlFor="username">Username:</label>
+                    <input placeholder="your_username" type="text" id="username" name="username" required />
+                </div>
+                <div>
+                    <label htmlFor="password">Password:</label>
+                    <input placeholder="password" type="password" id="password" name="password" required />
+                </div>
+                {state?.error && <div><small className="error">{state.error}</small></div>}
+                <button type="submit" disabled={pending}>{pending ? "Please wait..." : "Login"}</button>
+            </form>
+        </>
     );
 }

@@ -6,15 +6,19 @@ import { logout } from "@/actions/logout";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Header(){
-    const { user, setUser } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
+    const { user, setUser, isHydrated } = useAuth();
     const router = useRouter();
 
     const handleLogout = async () => {
-        await logout();
+        setIsLoading(true);
         setUser(null);
+        await logout();
         toast.success(<p>User logged out</p>);
+        setIsLoading(false);
         router.push("/auth/login");
     }
 
@@ -31,19 +35,21 @@ export default function Header(){
                 <nav className="flex items-center link">
                     <Link href={"/appearance"}>[appearance]</Link>
                     <div className="divider"></div>
-                    {user ? 
-                        <>
-                            <Link href={"/u/profile"}>[{user?.username}]</Link>
-                            <div className="divider"></div>
-                            <Link href={"/"} onClick={handleLogout}>[logout]</Link>
-                        </>
-                        :
-                        <>
-                            <Link href={"/auth/login"}>[login]</Link>
-                            <div className="divider"></div>
-                            <Link href={"/auth/register"}>[register]</Link>
-                        </>
-                    }
+                    {(!isHydrated || isLoading) ? 
+                        <p>loading...</p> : (
+                            user ? 
+                                <>
+                                    <Link href={"/u/profile"}>[{user.username}]</Link>
+                                    <div className="divider"></div>
+                                    <Link href={"#"} onClick={handleLogout}>[logout]</Link>
+                                </>
+                                :
+                                <>
+                                    <Link href={"/auth/login"}>[login]</Link>
+                                    <div className="divider"></div>
+                                    <Link href={"/auth/register"}>[register]</Link>
+                                </>
+                        )}
                 </nav>
             </nav>
         </header>

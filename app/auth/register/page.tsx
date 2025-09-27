@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Config } from "@/config/config";
 import RegisterForm from "@/components/forms/RegisterForm";
 import { getTotalUser } from '@/hooks/getStats';
+import { verifySession } from '@/lib/dal';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
     title: `Register | ${Config.name}`
@@ -10,6 +12,10 @@ export const metadata: Metadata = {
 
 export default async function RegisterPage(){
     const count = await getTotalUser();
+    const session  = await verifySession();
+
+    if (session?.isAuth) redirect("/");
+
     return(
         <>
             <p>{count}/{Config.USER_CAP-1001} users registered</p>
