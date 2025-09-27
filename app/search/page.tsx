@@ -22,7 +22,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     return (
         <div className='link'>
             <SidebarLayout>
-                <p>Showing results for '{query}'...</p>
+                <p>Showing results for &apos;{query}&apos;...</p>
                 <ul><p>Users:</p>
                     {data.users.length>0 ? data.users.map((data: User) => (
                         <li key={data.id}>

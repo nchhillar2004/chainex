@@ -3,18 +3,19 @@ import { useEffect } from "react";
 import { login } from "@/actions/login";
 import { useAuth } from "@/context/AuthContext";
 import { useActionState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function LoginForm(){
     const [ state, action, pending ] = useActionState(login, undefined);
     const { setUser } = useAuth();
+    const router = useRouter();
 
     useEffect(() => {
         if (state?.user) {
             setUser(state.user);
             toast.success(<p>Logged in successfully</p>);
-            redirect("/");
+            router.push("/");
         }
     }, [state, setUser]);
 
