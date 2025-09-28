@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig: NextConfig = {
     // optimizations
     compress: true,
@@ -7,7 +9,7 @@ const nextConfig: NextConfig = {
 
     images: {
         remotePatterns: 
-        process.env.NODE_ENV === "production" ? 
+        isProd ? 
             [
                 {
                     protocol: 'https',
@@ -45,15 +47,19 @@ const nextConfig: NextConfig = {
                     {
                         key: 'Permissions-Policy',
                         value: 'geolocation=(self), camera=(), microphone=()',
+                    },
+                    {
+                        key: 'Content-Security-Policy',
+                        value: "", // TODO add policy: default-src 'self'; script-src 'self';...
                     }
                 ]
             }
         ]
     },
 
-    // experimental
+    // experimental (only in DEV)
     experimental: {
-        optimizeCss: true
+        optimizeCss: !isProd
     }
 };
 
