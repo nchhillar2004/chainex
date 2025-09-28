@@ -44,3 +44,48 @@ export type RegisterFormState =
         cpassword?: string[]
     }
 } | undefined
+
+export const CreateChainFormSchema = z.object({
+    name: z
+        .string()
+        .min(3, { error: "Chain name must be at least 3 characters long" })
+        .max(50, { error: "Chain name can contain at most 50 characters" })
+        .regex(/^[a-zA-Z0-9\s_-]+$/, { error: "Chain name can only contain letters, numbers, spaces, underscores, and hyphens" })
+        .trim(),
+    description: z
+        .string()
+        .max(255, { error: "Description can contain at most 255 characters" })
+        .optional(),
+    visibility: z.enum(["PUBLIC", "PRIVATE"], { error: "Please select a valid visibility option" }),
+    postPolicy: z.enum(["VERIFIED_ONLY", "MODERATORS_ONLY", "LEVEL_BASED"], { error: "Please select a valid posting policy" }),
+    minAge: z
+        .string()
+        .optional()
+        .transform((val) => val ? parseInt(val) : undefined)
+        .refine((val) => val === undefined || (val >= 13 && val <= 100), { error: "Minimum age must be between 13 and 100" }),
+    maxAge: z
+        .string()
+        .optional()
+        .transform((val) => val ? parseInt(val) : undefined)
+        .refine((val) => val === undefined || (val >= 13 && val <= 100), { error: "Maximum age must be between 13 and 100" }),
+    tags: z
+        .string()
+        .optional()
+        .transform((val) => val ? val.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0) : [])
+        .refine((tags) => tags.length <= 5, { error: "You can add at most 5 tags" }),
+})
+.refine((data) => {
+    if (data.minAge && data.maxAge && data.minAge >= data.maxAge) {
+        return false;
+    }
+    return true;
+}, {
+    error: "Minimum age must be less than maximum age",
+    path: ["maxAge"],
+});
+
+export type CreateChainFormState = 
+| {
+    error?: string
+    success?: boolean
+} | undefined

@@ -1,10 +1,13 @@
-import CreateCommunityForm from "@/components/forms/CreateCommunityForm";
+import CreateChainForm from "@/components/forms/CreateChainForm";
+import SidebarLayout from "@/components/SidebarLayout";
 
 export default function CreateChain(){
     return(
-    <>
-            <CreateCommunityForm/>
-        </>
+        <SidebarLayout>
+            <div className="link">
+                <CreateChainForm/>
+            </div>
+        </SidebarLayout>
     );
 }
 

@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:nchhillar@localhost:3306/chainex"
+  url      = process.env.DATABASE_URL
 }
 
 // ----- GENERAL MODELS ----- //

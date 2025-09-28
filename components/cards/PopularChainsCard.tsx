@@ -12,7 +12,7 @@ export default function PopularChainsCard() {
             </div>
             <div className="py-2 px-4 border-b border-x border-[var(--border)] bg-[var(--card-bg)] rounded-b-md">
                 <ul className="space-y-2 link">
-                    <li className="flex space-x-2 items-center"><Link href={"#"}>c/General</Link><small>(12k)</small></li>
+                    <li className="flex space-x-2 items-center"><Link href={"/c/General"}>c/General</Link><small>(12k)</small></li>
                     <li className="flex space-x-2 items-center"><Link href={"#"}>c/Politics</Link><small>(11.4k)</small></li>
                     <li className="flex space-x-2 items-center"><Link href={"#"}>c/Computer-Science</Link><small>(11k)</small></li>
                     <li className="flex space-x-2 items-center"><Link href={"#"}>c/Mathematics</Link><small>(10k)</small></li>
