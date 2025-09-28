@@ -9,7 +9,7 @@ export default function SidebarLayout({children}: {children: React.ReactNode}) {
                 <SearchForm/>
             </div>
             <div className="flex min-md:space-x-4">
-                <div className="min-md:w-[75%] space-y-4">
+                <div className="min-md:w-[75%] w-full space-y-4">
                     {children}
                 </div>
                 <div className="max-md:hidden">

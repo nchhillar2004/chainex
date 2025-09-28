@@ -1,4 +1,5 @@
 import MainWelcomeCard from "@/components/cards/MainWelcomeCard";
+import CreateThreadForm from "@/components/forms/CreateThreadForm";
 import SidebarLayout from "@/components/SidebarLayout";
 import Marquee from "@/components/ui/Marquee";
 import { Config } from '@/config/config';
@@ -23,7 +24,7 @@ export default async function Home(){
                     ]} />
                 </div>
                 <div>
-                    {!user && <MainWelcomeCard/>}
+                    {user ? <CreateThreadForm/> : <MainWelcomeCard/>}
                 </div>
                 <div>
                     <h2 className="text-xl font-semibold">Popular Threads</h2>

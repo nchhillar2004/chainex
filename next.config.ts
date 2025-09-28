@@ -56,11 +56,6 @@ const nextConfig: NextConfig = {
             }
         ]
     },
-
-    // experimental (only in DEV)
-    experimental: {
-        optimizeCss: !isProd
-    }
 };
 
 export default nextConfig;

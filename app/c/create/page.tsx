@@ -1,7 +1,9 @@
+import CreateCommunityForm from "@/components/forms/CreateCommunityForm";
+
 export default function CreateChain(){
     return(
     <>
-            New Chain Page
+            <CreateCommunityForm/>
         </>
     );
 }

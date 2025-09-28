@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
             {
                 userAgent: 'Googlebot',
                 allow: ['/', '/c/', '/t/', '/u/', '/about/', '/privacy/'],
-                disallow: ['/auth/', '/create/', '/new/'],
+                disallow: ['/auth/', '/c/create/'],
             },
             {
                 userAgent: ['Applebot', 'Bingbot'],
