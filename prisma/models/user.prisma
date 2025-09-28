@@ -38,6 +38,8 @@ model User {
   reportsAsReporter     Report[]             @relation("Reporter")
   referralCodesCreated  ReferralCode[]       @relation("Creator")
   communityBansReceived ChainBan[]           @relation("BannedUser")
+  xpLogs                XPLog[]
+  referralUsages        ReferralUsage[]
 
   time      String
   createdAt DateTime @default(now())

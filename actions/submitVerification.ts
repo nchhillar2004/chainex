@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { cookies } from "next/headers";
 import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import { validateReferralCode } from "@/actions/referralActions";
 
 export async function submitVerification(formData: FormData) {
     const sessionId = (await cookies()).get("sessionId")?.value;
@@ -50,21 +51,16 @@ export async function submitVerification(formData: FormData) {
     }
 
     try {
-        // Handle file upload (for now, we'll store the filename)
-        // In production, you'd want to upload to a cloud storage service
         const documentUrl = `uploads/verification/${user.id}_${Date.now()}_${document.name}`;
 
-        // Check if referral code exists and is valid
+        // Validate referral code
         let referralCodeId = null;
         if (referralCode) {
-            const refCode = await prisma.referralCode.findFirst({
-                where: {
-                    code: referralCode,
-                    status: "ACTIVE"
-                }
-            });
-            if (refCode) {
-                referralCodeId = refCode.id;
+            const validation = await validateReferralCode(referralCode);
+            if (validation.valid && validation.referralCode) {
+                referralCodeId = validation.referralCode.id;
+            } else {
+                return { error: validation.error || "Invalid referral code" };
             }
         }
 

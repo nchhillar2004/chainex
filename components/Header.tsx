@@ -39,7 +39,7 @@ export default function Header(){
                         <p>loading...</p> : (
                             user ? 
                                 <>
-                                    <Link href={"/u/profile"}>[{user.username}]</Link>
+                                    <Link href={`/u/${user.username}`}>[{user.username}]</Link>
                                     <div className="divider"></div>
                                     <Link href={"#"} onClick={handleLogout}>[logout]</Link>
                                 </>

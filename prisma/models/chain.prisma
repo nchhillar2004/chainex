@@ -71,7 +71,8 @@ model PinnedThread {
   threadId Int
   pinnedAt DateTime @default(now())
 
-  chain Chain @relation(fields: [chainId], references: [id], onDelete: Cascade)
+  chain  Chain  @relation(fields: [chainId], references: [id], onDelete: Cascade)
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
 
   @@id([chainId, threadId])
   @@index([chainId])

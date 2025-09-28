@@ -1,67 +1,85 @@
-import { getCurrentUser } from "@/hooks/getUser"
-import prisma from "@/lib/db";
-import Link from "next/link";
+"use client"
+import { useTransition } from "react";
+import { createThread } from "@/actions/createThread";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
-export default async function CreateThreadForm() {
-    const user = await getCurrentUser();
+interface CreateThreadFormProps {
+    chainId: number;
+    chainName: string;
+    postPolicy: string;
+}
 
-    const chains = await prisma.chain.findMany({
-        where: {
-            members: {
-                some: { userId: user?.id },
+export default function CreateThreadForm({ chainId, chainName, postPolicy }: CreateThreadFormProps) {
+    const [isPending, startTransition] = useTransition();
+    const router = useRouter();
+
+    const handleSubmit = (formData: FormData) => {
+        startTransition(async () => {
+            const result = await createThread(formData);
+            if (result?.success) {
+                toast.success("Thread created successfully!");
+                router.push(`/c/${chainName}/thread/${result.threadId}`);
+            } else if (result?.error) {
+                toast.error(result.error);
             }
-        }
-    });
-    const hasJoinedChains = chains.length>0;
+        });
+    };
 
     return (
-        <div className="py-4 px-8 max-sm:px-2 bg-[var(--card-bg)] min-sm:rounded-xl border border-[var(--border)]">
-            <h1 className="font-bold text-2xl mb-4">Create Thread</h1>
-            {!hasJoinedChains && <p className="link">
-                <span className="error">
-                Join a chain/ community to post something.
-                </span>
-                <Link href={"/c/"}>Explore chains</Link>
-            </p>}
-            <form className="overflow-hidden">
-                <div className="min-lg:flex-row! max-lg:space-y-2 min-lg:space-x-2 min-lg:justify-between">
-                    <div className="min-lg:min-w-[50%] w-full">
-                        <label htmlFor="title">Thread title<span className="text-red-500">*</span>:</label><br/>
-                        <input placeholder="Give a brief title" className="w-full" type="text" id="title" name="title" autoComplete="off" required/>
-                    </div>
-                    <div>
-                        <label htmlFor="chain">Select a chain<span className="text-red-500">*</span>:</label><br/>
-                        <select defaultChecked={false} id="chain" name="chain" required>
-                            {hasJoinedChains ?
-                                chains.map((chain) => (
-                                    <option key={chain.id} value={chain.id}>{chain.name}</option>
-                                ))
-                                : <option disabled defaultChecked>No chains available</option>
-                            }
-                        </select>
-                    </div>
-                </div>
+        <div className="card">
+            <h1>Create Thread in {chainName}</h1>
+            <p className="info mb-4">Posting Policy: {postPolicy}</p>
+            
+            <form action={handleSubmit}>
+                <input type="hidden" name="chainId" value={chainId} />
+                
                 <div>
-                    <label htmlFor="content">Content</label>
-                    <textarea placeholder="Thread content" id="content" name="content" className="w-full min-h-[100px] max-h-[250px]" maxLength={2000} required />
+                    <label htmlFor="title">Thread Title *</label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        required
+                        placeholder="Enter thread title"
+                        maxLength={200}
+                    />
                 </div>
-                <div className="flex min-md:space-x-2 max-md:flex-col max-md:space-y-2">
-                    <div>
-                        <label htmlFor="file">Attach a file</label><br/>
-                        <input type="file" placeholder="Select file" id="file" name="file" />
-                    </div>
-                    <div>
-                        <label htmlFor="img">Upload an image</label><br/>
-                        <input type="image" placeholder="Select image" id="img" name="img" />
-                    </div>
 
-                </div>
                 <div>
-                    <label htmlFor="tags">Add tags (Optional):</label>
-                    <input placeholder="Tags" type="text" id="tags" name="tags"/>
+                    <label htmlFor="content">Content *</label>
+                    <textarea
+                        id="content"
+                        name="content"
+                        required
+                        placeholder="Write your thread content..."
+                        rows={8}
+                    />
                 </div>
-                <button type="submit" disabled={!hasJoinedChains}>Create</button>
+
+                <div>
+                    <label htmlFor="tags">Tags (comma-separated)</label>
+                    <input
+                        type="text"
+                        id="tags"
+                        name="tags"
+                        placeholder="e.g., discussion, question, help"
+                    />
+                    <small className="info">Add up to 5 tags to help categorize your thread</small>
+                </div>
+
+                <div className="flex gap-4">
+                    <button type="submit" disabled={isPending}>
+                        {isPending ? "Creating..." : "Create Thread"}
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => router.back()}
+                    >
+                        Cancel
+                    </button>
+                </div>
             </form>
         </div>
-    )
+    );
 }

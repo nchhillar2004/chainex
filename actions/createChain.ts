@@ -4,6 +4,8 @@ import { CreateChainFormSchema, CreateChainFormState } from "@/lib/definitions";
 import { cookies } from "next/headers";
 import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import { addXP } from "@/actions/xpActions";
+import { XP_REWARDS } from "@/lib/xpConstants";
 
 export async function createChain(state: CreateChainFormState, formData: FormData) {
     const sessionId = (await cookies()).get("sessionId")?.value;
@@ -79,6 +81,9 @@ export async function createChain(state: CreateChainFormState, formData: FormDat
                 slug: slug,
             }
         });
+
+        // Give XP for creating a chain
+        await addXP(user.id, XP_REWARDS.CHAIN_CREATED, "CHAIN_CREATED");
 
         // Add tags if provided
         if (tags && tags.length > 0) {

@@ -1,6 +1,4 @@
 import prisma from "@/lib/db";
-import { getSession } from "./session";
-import { cookies } from "next/headers";
 
 export async function getTopChains(limit: number = 10, userId?: number) {
     try {
@@ -29,7 +27,18 @@ export async function getTopChains(limit: number = 10, userId?: number) {
                 },
                 threads: {
                     select: {
-                        id: true
+                        id: true,
+                        title: true,
+                        createdAt: true,
+                        author: {
+                            select: {
+                                username: true
+                            }
+                        }
+                    },
+                    take: 10,
+                    orderBy: {
+                        createdAt: 'desc'
                     }
                 },
                 boosts: userId ? {
@@ -57,7 +66,7 @@ export async function getTopChains(limit: number = 10, userId?: number) {
         });
 
         // Add userBoosted property to each chain
-        const chainsWithBoostStatus = chains.map((chain: any) => ({
+            const chainsWithBoostStatus = chains.map((chain) => ({
             ...chain,
             userBoosted: userId ? chain.boosts && chain.boosts.length > 0 : false
         }));
@@ -69,7 +78,7 @@ export async function getTopChains(limit: number = 10, userId?: number) {
     }
 }
 
-export async function getChainBySlug(slug: string) {
+export async function getChainBySlug(slug: string, userId?: number) {
     try {
         const chain = await prisma.chain.findUnique({
             where: {
@@ -90,12 +99,24 @@ export async function getChainBySlug(slug: string) {
                 },
                 members: {
                     select: {
-                        id: true
+                        id: true,
+                        userId: true
                     }
                 },
                 threads: {
                     select: {
-                        id: true
+                        id: true,
+                        title: true,
+                        createdAt: true,
+                        author: {
+                            select: {
+                                username: true
+                            }
+                        }
+                    },
+                    take: 10,
+                    orderBy: {
+                        createdAt: 'desc'
                     }
                 },
                 _count: {
@@ -108,7 +129,19 @@ export async function getChainBySlug(slug: string) {
             }
         });
 
-        return chain;
+        if (!chain) {
+            return null;
+        }
+
+        // Add user-specific membership information
+            const isMember = userId ? chain.members.some((member) => member.userId === userId) : false;
+        const isCreator = userId ? chain.creator.id === userId : false;
+
+        return {
+            ...chain,
+            isMember,
+            isCreator
+        };
     } catch (error) {
         console.error("Error fetching chain:", error);
         return null;

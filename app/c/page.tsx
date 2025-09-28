@@ -56,7 +56,7 @@ export default async function ExploreChains(){
                     </div>
                 ) : (
                     <div className="">
-                        {chains.map((chain: any) => (
+                        {chains.map((chain) => (
                             <ChainCard key={chain.id} chain={chain} />
                         ))}
                     </div>

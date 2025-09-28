@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = process.env.DATABASE_URL
+  url      = "mysql://root:nchhillar@localhost:3306/chainex"
 }
 
 // ----- GENERAL MODELS ----- //
@@ -26,19 +26,48 @@ model Badge {
 }
 
 model ReferralCode {
-  id        Int            @id @default(autoincrement())
-  code      String         @unique
-  creatorId Int
-  usedBy    Int?
-  maxUses   Int            @default(1)
-  status    ReferralStatus @default(ACTIVE)
+  id         Int            @id @default(autoincrement())
+  code       String         @unique
+  creatorId  Int
+  maxUses    Int            @default(5)
+  currentUses Int           @default(0)
+  status     ReferralStatus @default(ACTIVE)
 
   expiresAt DateTime?
   createdAt DateTime  @default(now())
 
   creator       User                  @relation("Creator", fields: [creatorId], references: [id], onDelete: Cascade)
   verifications VerificationRequest[]
+  usages        ReferralUsage[]
 
   @@index([creatorId])
   @@index([code])
+}
+
+model ReferralUsage {
+  referralCodeId Int
+  userId         Int
+  usedAt         DateTime @default(now())
+
+  referralCode ReferralCode @relation(fields: [referralCodeId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([referralCodeId, userId])
+  @@index([referralCodeId])
+  @@index([userId])
+}
+
+model XPLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  amount    Int
+  action    String
+  newTotal  Int
+  newLevel  Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt(sort: Desc)])
 }

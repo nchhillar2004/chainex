@@ -14,6 +14,7 @@ model Thread {
   votes        Vote[]         @relation("ThreadVotes")
   threadTags   ThreadTag[]
   files        File[]         @relation("ThreadFiles")
+  pinnedThreads PinnedThread[]
   Notification Notification[]
 
   @@index([chainId])
